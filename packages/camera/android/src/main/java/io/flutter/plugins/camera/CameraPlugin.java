@@ -176,11 +176,13 @@ public class CameraPlugin implements MethodCallHandler {
                 if (afAvailableModes.length == 0 || (afAvailableModes.length == 1
                     && afAvailableModes[0] == CameraMetadata.CONTROL_AF_MODE_OFF)) {
                   Log.i(">>>>","AF false");
+                  throw new RuntimeException("IHATEYOU");
                 } else {
                   Log.i(">>>>","AF true");
+                  throw new RuntimeException("IHATEHIM");
                 }
-                details.put("lensFacing", "front");
-                break;
+              //  details.put("lensFacing", "front");
+               // break;
               case CameraMetadata.LENS_FACING_BACK:
                 details.put("lensFacing", "back");
                 break;
