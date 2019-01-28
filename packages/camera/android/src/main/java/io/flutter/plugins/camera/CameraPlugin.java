@@ -179,8 +179,8 @@ public class CameraPlugin implements MethodCallHandler {
                 } else {
                   Log.i(">>>>","AF true");
                 }
-              //  details.put("lensFacing", "front");
-               // break;
+                details.put("lensFacing", "front");
+                break;
               case CameraMetadata.LENS_FACING_BACK:
                 details.put("lensFacing", "back");
                 break;
