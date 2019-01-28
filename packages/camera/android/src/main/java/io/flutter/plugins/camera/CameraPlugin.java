@@ -157,6 +157,7 @@ public class CameraPlugin implements MethodCallHandler {
         result.success(null);
         break;
       case "availableCameras":
+        Log.i(">>>>","tada");
         try {
           String[] cameraNames = cameraManager.getCameraIdList();
           List<Map<String, Object>> cameras = new ArrayList<>();
