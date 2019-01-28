@@ -8,6 +8,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.ImageFormat;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
@@ -603,6 +604,7 @@ public class CameraPlugin implements MethodCallHandler {
             cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
         captureBuilder.addTarget(pictureImageReader.getSurface());
         captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, getMediaOrientation());
+        captureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON);
         captureRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_AUTO);
         captureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CaptureRequest.CONTROL_MODE_AUTO);
 
@@ -728,6 +730,7 @@ public class CameraPlugin implements MethodCallHandler {
       Surface previewSurface = new Surface(surfaceTexture);
       surfaces.add(previewSurface);
       captureRequestBuilder.addTarget(previewSurface);
+      captureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON);
       captureRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_AUTO);
       captureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CaptureRequest.CONTROL_MODE_AUTO);
 
