@@ -603,7 +603,8 @@ public class CameraPlugin implements MethodCallHandler {
             cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
         captureBuilder.addTarget(pictureImageReader.getSurface());
         captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, getMediaOrientation());
-        captureBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_AUTO);
+        captureRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_MACRO);
+        captureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CaptureRequest.CONTROL_MODE_AUTO);
 
         cameraCaptureSession.capture(
             captureBuilder.build(),
@@ -727,6 +728,8 @@ public class CameraPlugin implements MethodCallHandler {
       Surface previewSurface = new Surface(surfaceTexture);
       surfaces.add(previewSurface);
       captureRequestBuilder.addTarget(previewSurface);
+      captureRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_MACRO);
+      captureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CaptureRequest.CONTROL_MODE_AUTO);
 
       surfaces.add(pictureImageReader.getSurface());
 
