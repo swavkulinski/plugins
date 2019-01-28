@@ -25,6 +25,7 @@ import android.media.ImageReader;
 import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Size;
 import android.view.Display;
 import android.view.OrientationEventListener;
@@ -166,8 +167,17 @@ public class CameraPlugin implements MethodCallHandler {
             details.put("name", cameraName);
             @SuppressWarnings("ConstantConditions")
             int lensFacing = characteristics.get(CameraCharacteristics.LENS_FACING);
+
             switch (lensFacing) {
               case CameraMetadata.LENS_FACING_FRONT:
+                int[] afAvailableModes = characteristics.get(CameraCharacteristics.CONTROL_AF_AVAILABLE_MODES);
+
+                if (afAvailableModes.length == 0 || (afAvailableModes.length == 1
+                    && afAvailableModes[0] == CameraMetadata.CONTROL_AF_MODE_OFF)) {
+                  Log.i(">>>>","AF false");
+                } else {
+                  Log.i(">>>>","AF true");
+                }
                 details.put("lensFacing", "front");
                 break;
               case CameraMetadata.LENS_FACING_BACK:
@@ -603,7 +613,9 @@ public class CameraPlugin implements MethodCallHandler {
         final CaptureRequest.Builder captureBuilder =
             cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
         captureBuilder.addTarget(pictureImageReader.getSurface());
+        Log.i(">>>","TAKE PICTURE");
         captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, getMediaOrientation());
+
         captureBuilder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON);
         captureBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_MACRO);
         captureBuilder.set(CaptureRequest.CONTROL_MODE, CaptureRequest.CONTROL_MODE_AUTO);
@@ -730,6 +742,7 @@ public class CameraPlugin implements MethodCallHandler {
       Surface previewSurface = new Surface(surfaceTexture);
       surfaces.add(previewSurface);
       captureRequestBuilder.addTarget(previewSurface);
+      Log.i(">>>","START PREVIEW");
       captureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON);
       captureRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_MACRO);
       captureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CaptureRequest.CONTROL_MODE_AUTO);
